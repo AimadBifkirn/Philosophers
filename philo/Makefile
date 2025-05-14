@@ -2,7 +2,7 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = main.c ft_atoi.c
+SRC = main.c ft_atoi.c check_valid_args.c ft_strlen.c
 
 OBJ = ${SRC:.c=.o}
 

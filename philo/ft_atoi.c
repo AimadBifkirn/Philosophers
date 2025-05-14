@@ -27,12 +27,40 @@ static int	sign(char *str)
 	return (i * j);
 }
 
-int	ft_atoi(const char *str)
+void	print_error(char *str)
+{
+	write (2, "this value is begger then int max :", 36);
+	write (2, str, ft_strlen(str));
+	write (2, "\n", 1);
+	exit (1);
+}
+
+void	check_lenght(char *str)
 {
 	int	i;
-	int	s;
-	int	result;
+	int	len;
 
+	i = 0;
+	len = 0;
+	while (str[i])
+	{
+		if (str[i] == '+' || str[i] == '-')
+			;
+		else
+			len++;
+		i++;
+	}
+	if (len > 10)
+		print_error(str);
+}
+
+int	ft_atoi(char *str)
+{
+	int		i;
+	int		s;
+	long	result;
+
+	check_lenght(str);
 	s = 1;
 	i = sign((char *)str);
 	if (i < 0)
@@ -49,5 +77,7 @@ int	ft_atoi(const char *str)
 			break ;
 		i++;
 	}
+	if (result > INT_MAX)
+		print_error(str);
 	return (result * s);
 }

@@ -5,6 +5,11 @@ t_infos	init_struct(char **argv)
 	t_infos	res;
 
 	res.n_philos = ft_atoi(argv[1]);
+	if (res.n_philos == 0 || res.n_philos > 200)
+	{
+		write (2, "invalid philos number !\n", 25);
+		exit (1);
+	}
 	res.time_to_d = ft_atoi(argv[2]);
 	res.time_to_e = ft_atoi(argv[3]);
 	res.time_to_s = ft_atoi(argv[4]);
@@ -58,6 +63,7 @@ int main(int argc, char **argv)
 		write (2, "invalid number of arguments\n", 29);
 		return (1);
 	}
+	check_valid_args(argv + 1);
 	infos = init_struct(argv);
 	create_threads(&infos);
 	return (0);
