@@ -17,6 +17,10 @@ t_infos	init_struct(char **argv)
 		res.num_times_eat = ft_atoi(argv[5]);
 	else
 		res.num_times_eat = -1;
+	res.died = 0;
+	res.forks = forks_init(res.n_philos);
+	pthread_mutex_init(&res.print_lock, NULL);
+	pthread_mutex_init(&res.data_lock, NULL);
 	return (res);
 }
 
