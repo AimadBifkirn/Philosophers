@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <limits.h>
+#include <unistd.h>
 
 typedef struct s_infos
 {
@@ -38,5 +39,8 @@ int				ft_atoi(char *str);
 void			check_valid_args(char **args);
 size_t			ft_strlen(const char *s);
 pthread_mutex_t	*forks_init(int n);
+t_philo	*init_philo(t_infos *info);
+long	get_time();
+void	ft_usleep(t_philo *philo);
 
 #endif

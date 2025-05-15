@@ -4,6 +4,7 @@ t_infos	init_struct(char **argv)
 {
 	t_infos	res;
 
+	res.start_time = get_time();
 	res.n_philos = ft_atoi(argv[1]);
 	if (res.n_philos == 0 || res.n_philos > 200)
 	{
@@ -17,7 +18,7 @@ t_infos	init_struct(char **argv)
 		res.num_times_eat = ft_atoi(argv[5]);
 	else
 		res.num_times_eat = -1;
-	res.died = 0;
+	res.died = 1;
 	res.forks = forks_init(res.n_philos);
 	pthread_mutex_init(&res.print_lock, NULL);
 	pthread_mutex_init(&res.data_lock, NULL);
@@ -34,26 +35,14 @@ void	*handel_threads(void *i)
 	return (NULL);
 }
 
-void	create_threads(t_infos *infos)
+void	join_threads(t_philo *philo)
 {
 	int	i;
-	static pthread_t	*pids;
 
 	i = 0;
-	pids = malloc(sizeof(pthread_t) * infos->n_philos);
-	pthread_mutex_t		zz;
-	pthread_mutex_init(&zz, NULL);
-	while (i < infos->n_philos)
+	while (i < philo->infos->n_philos)
 	{
-		int *arg = malloc(sizeof(int));
-		*arg = i;
-		pthread_create(&pids[i], NULL, handel_threads, arg);
-		i++;
-	}
-	i = 0;
-	while (i < infos->n_philos)
-	{
-		pthread_join(pids[i], NULL);
+		pthread_join(philo[i].tr, NULL);
 		i++;
 	}
 }
@@ -61,14 +50,18 @@ void	create_threads(t_infos *infos)
 int main(int argc, char **argv)
 {
 	t_infos	infos;
+	t_philo	*philo;
 
 	if (argc < 5 || argc > 6)
 	{
 		write (2, "invalid number of arguments\n", 29);
 		return (1);
 	}
-	check_valid_args(argv + 1);
 	infos = init_struct(argv);
-	create_threads(&infos);
+	philo = init_philo(&infos);
+	check_valid_args(argv + 1);
+	// create_philos_threads(&infos);
+	join_threads(philo);
+	// clear_all(); to code later.
 	return (0);
 }
