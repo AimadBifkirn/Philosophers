@@ -42,5 +42,8 @@ pthread_mutex_t	*forks_init(int n);
 t_philo	*init_philo(t_infos *info);
 long	get_time();
 void	ft_usleep(t_philo *philo);
+void	join_threads(t_philo *philo);
+void	*routine_of_philo(void *philo);
+void	*monitore_routine(void *philo);
 
 #endif

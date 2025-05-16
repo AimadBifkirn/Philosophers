@@ -38,11 +38,28 @@ void	*handel_threads(void *i)
 void	join_threads(t_philo *philo)
 {
 	int	i;
+	int	num;
 
 	i = 0;
-	while (i < philo->infos->n_philos)
+	num = philo->infos->n_philos;
+	while (i < num)
 	{
 		pthread_join(philo[i].tr, NULL);
+		i++;
+	}
+}
+
+void	start_threads(t_philo *philo)
+{
+	int	num;
+	int	i;
+
+	num = philo->infos->n_philos;
+	i = 0;
+	while (i < num)
+	{
+		pthread_create(&philo[i].tr, NULL, routine_of_philo, &philo[i]);
+		usleep (100);
 		i++;
 	}
 }
@@ -51,17 +68,20 @@ int main(int argc, char **argv)
 {
 	t_infos	infos;
 	t_philo	*philo;
+	pthread_t	monitor;
 
 	if (argc < 5 || argc > 6)
 	{
 		write (2, "invalid number of arguments\n", 29);
 		return (1);
 	}
+	check_valid_args(argv + 1);
 	infos = init_struct(argv);
 	philo = init_philo(&infos);
-	check_valid_args(argv + 1);
-	// create_philos_threads(&infos);
+	start_threads(philo);
+	pthread_create(&monitor, NULL, monitore_routine, philo);
 	join_threads(philo);
+	pthread_join(monitor, NULL);
 	// clear_all(); to code later.
 	return (0);
 }
