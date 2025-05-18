@@ -25,16 +25,6 @@ t_infos	init_struct(char **argv)
 	return (res);
 }
 
-void	*handel_threads(void *i)
-{
-	struct timeval time;
-	gettimeofday(&time, NULL);
-	printf ("%ld\t", time.tv_sec);
-	printf ("this is philosofer %d\n", *((int *)i) + 1);
-	free (i);
-	return (NULL);
-}
-
 void	join_threads(t_philo *philo)
 {
 	int	i;
@@ -59,7 +49,6 @@ void	start_threads(t_philo *philo)
 	while (i < num)
 	{
 		pthread_create(&philo[i].tr, NULL, routine_of_philo, &philo[i]);
-		usleep (100);
 		i++;
 	}
 }
