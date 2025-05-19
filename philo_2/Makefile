@@ -1,8 +1,8 @@
 NAME = philo
 CC = cc
-CFLAGS = -fsanitize=thread -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
 
-SRC = main.c ft_atoi.c check_valid_args.c ft_strlen.c helpers.c
+SRC = main.c ft_atoi.c check_valid_args.c ft_strlen.c helpers.c philo_routine.c gard_routine.c
 
 OBJ = ${SRC:.c=.o}
 

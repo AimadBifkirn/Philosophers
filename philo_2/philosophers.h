@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/19 13:22:22 by abifkirn          #+#    #+#             */
+/*   Updated: 2025/05/19 13:23:07 by abifkirn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILOSOPHERS_H
-#define PHILOSOPHERS_H
+# define PHILOSOPHERS_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <limits.h>
-#include <unistd.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <pthread.h>
+# include <stdlib.h>
+# include <sys/time.h>
+# include <limits.h>
+# include <unistd.h>
 
-struct s_philo;
+struct	s_philo;
 
 typedef struct s_infos
 {
@@ -36,16 +48,16 @@ typedef struct s_philo
 	t_infos			*glob;
 }	t_philo;
 
-
 int				ft_atoi(char *str);
 void			check_valid_args(char **args);
 size_t			ft_strlen(const char *s);
 pthread_mutex_t	*forks_init(int n);
-t_philo	*init_philo(t_infos *info);
-long	get_time();
-void	ft_usleep(t_philo *philo);
-void	join_threads(t_philo *philo);
-// void	*routine_of_philo(void *philo);
-// void	*monitore_routine(void *philo);
+t_philo			*init_philo(t_infos *info);
+long			get_time(void);
+void			ft_usleep(t_philo *philo);
+void			join_threads(t_philo *philo);
+void			*philo_routine(void *glob);
+void			*gard_routine(void *arg);
+void			free_all(t_infos **glob);
 
 #endif
