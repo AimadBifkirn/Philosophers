@@ -61,7 +61,20 @@ void	init_glob(t_infos **glob, char **argv)
 	*glob = res;
 }
 
-void	take_fork(t_philo *philo, pthread_mutex_t *first, pthread_mutex_t *second)
+void	eate(t_philo *philo)
+{
+	if (!philo->glob->died)
+	{
+		pthread_mutex_lock(&philo->glob->data_lock);
+		philo->num_meals++;
+		philo->last_meal_time = get_time();
+		pthread_mutex_unlock(&philo->glob->data_lock);
+		printf ("%ld %d is eating\n", get_time() - philo->glob->start_time, philo->id);
+		usleep (philo->glob->time_to_e * 1000);
+	}
+}
+
+void	take_fork_and_eate(t_philo *philo, pthread_mutex_t *first, pthread_mutex_t *second)
 {
 	pthread_mutex_lock(&philo->glob->data_lock);
 	if (!philo->glob->died)
@@ -78,34 +91,20 @@ void	take_fork(t_philo *philo, pthread_mutex_t *first, pthread_mutex_t *second)
 		printf ("%ld %d has taken a fork\n", get_time() - philo->glob->start_time, philo->id);
 	}
 	pthread_mutex_unlock(&philo->glob->data_lock);
-}
-
-void	eate(t_philo *philo)
-{
-	if (!philo->glob->died)
-	{
-		pthread_mutex_lock(&philo->glob->data_lock);
-		philo->last_meal_time = get_time();
-		pthread_mutex_unlock(&philo->glob->data_lock);
-		printf ("%ld %d is eating\n", get_time() - philo->glob->start_time, philo->id);
-		usleep (philo->glob->time_to_e * 1000);
-	}
+	eate(philo);
 }
 
 void	sleap_think(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->glob->data_lock);
 	if (!philo->glob->died)
-	{
 		printf ("%ld %d is sleeping\n", get_time() - philo->glob->start_time, philo->id);
-		pthread_mutex_unlock(&philo->glob->data_lock);
-		usleep (philo->glob->time_to_s * 1000);
-		pthread_mutex_lock(&philo->glob->data_lock);
+	pthread_mutex_unlock(&philo->glob->data_lock);
+	usleep (philo->glob->time_to_s * 1000);
+	pthread_mutex_lock(&philo->glob->data_lock);
+	if (!philo->glob->died)
 		printf ("%ld %d is thinking\n", get_time() - philo->glob->start_time, philo->id);
-		pthread_mutex_unlock(&philo->glob->data_lock);
-	}
-	else
-		pthread_mutex_unlock(&philo->glob->data_lock);
+	pthread_mutex_unlock(&philo->glob->data_lock);
 }
 
 void	*philo_routine(void *glob)
@@ -125,8 +124,7 @@ void	*philo_routine(void *glob)
 	}
 	while (!philo->glob->died && (philo->glob->num_times_eat == -1  ||  philo->num_meals < philo->glob->num_times_eat))
 	{
-		take_fork(philo, first, second);
-		eate(philo);
+		take_fork_and_eate(philo, first, second);
 		if (!philo->glob->died)
 		{
 			pthread_mutex_unlock(first);
@@ -163,7 +161,7 @@ void *gard_routine(void *arg)
     while (!g->died)
     {
 		i = 0;
-		if (g->philos[i].num_meals != 1 && g->philos[i].num_meals == g->num_times_eat) // still need to fix it 
+		if (g->philos[i].num_meals != 1 && g->philos[i].num_meals == g->num_times_eat)
 			return (NULL);
         while (i < g->n_philos)
         {
