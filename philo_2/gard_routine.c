@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:12:45 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/19 13:37:45 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:03:30 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	*gard_routine(void *arg)
 	while (!g->died)
 	{
 		i = -1;
-		if (g->philos[i].num_meals != 1 \
-		&& g->philos[i].num_meals == g->num_times_eat)
+		if (g->philos[0].num_meals != 1 \
+		&& g->philos[0].num_meals == g->num_times_eat)
 			return (NULL);
 		while (++i < g->n_philos)
 		{

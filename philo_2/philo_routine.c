@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:16:50 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/19 13:37:36 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:06:28 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ pthread_mutex_t *first, pthread_mutex_t *second)
 		if (philo->glob->n_philos == 1)
 		{
 			pthread_mutex_unlock(first);
+			pthread_mutex_unlock(&philo->glob->data_lock);
 			free_all(&philo->glob);
 			exit (0);
 		}

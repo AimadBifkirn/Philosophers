@@ -1,6 +1,6 @@
 NAME = philo
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = main.c ft_atoi.c check_valid_args.c ft_strlen.c helpers.c philo_routine.c gard_routine.c
 
@@ -12,7 +12,7 @@ all: ${NAME}
 	${CC} ${FLAGS} -c $< -o $@
 
 ${NAME}: ${OBJ}
-	${CC} -g ${OBJ} -o ${NAME} -lreadline
+	${CC} -fsanitize=thread -g ${OBJ} -o ${NAME} -lreadline
 
 clean:
 	rm -f ${OBJ}
