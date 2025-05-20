@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:09:11 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/19 13:11:22 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/20 11:50:04 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	main(int argc, char **argv)
 		write (2, "invalid number of arguments\n", 29);
 		return (1);
 	}
+	check_valid_args(argv + 1);
 	init_glob(&glob, argv);
 	init_philos(&glob->philos, glob);
 	create_threads(&glob);
