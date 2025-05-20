@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:16:50 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/19 14:06:28 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/20 11:19:44 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,33 +26,57 @@ void	eate(t_philo *philo)
 	}
 }
 
-void	take_fork_and_eate(t_philo *philo, \
-pthread_mutex_t *first, pthread_mutex_t *second)
+int	take_first(t_philo *philo, pthread_mutex_t *first)
 {
 	pthread_mutex_lock(&philo->glob->data_lock);
-	if (!philo->glob->died)
+	if (philo->glob->died)
 	{
-		pthread_mutex_lock(first);
-		printf ("%ld %d has taken a fork\n", \
-		get_time() - philo->glob->start_time, philo->id);
-		if (philo->glob->n_philos == 1)
-		{
-			pthread_mutex_unlock(first);
-			pthread_mutex_unlock(&philo->glob->data_lock);
-			free_all(&philo->glob);
-			exit (0);
-		}
-		pthread_mutex_lock(second);
-		printf ("%ld %d has taken a fork\n", \
-		get_time() - philo->glob->start_time, philo->id);
+		pthread_mutex_unlock(&philo->glob->data_lock);
+		return (1);
 	}
 	pthread_mutex_unlock(&philo->glob->data_lock);
-	eate(philo);
-	if (!philo->glob->died)
+	pthread_mutex_lock(first);
+	pthread_mutex_lock(&philo->glob->data_lock);
+	if (philo->glob->died)
+	{
+		pthread_mutex_unlock(&philo->glob->data_lock);
+		pthread_mutex_unlock(first);
+		return (1);
+	}
+	printf ("%ld %d has taken a fork\n", \
+		get_time() - philo->glob->start_time, philo->id);
+	pthread_mutex_unlock(&philo->glob->data_lock);
+	return (0);
+}
+
+void	take_fork_and_eate(t_philo *philo, \
+	pthread_mutex_t *first, pthread_mutex_t *second)
+{
+	if (take_first(philo, first))
+		return ;
+	if (philo->glob->n_philos == 1)
 	{
 		pthread_mutex_unlock(first);
-		pthread_mutex_unlock(second);
+		pthread_mutex_lock(&philo->glob->data_lock);
+		philo->glob->died = 1;
+		pthread_mutex_unlock(&philo->glob->data_lock);
+		return ;
 	}
+	pthread_mutex_lock(second);
+	pthread_mutex_lock(&philo->glob->data_lock);
+	if (philo->glob->died)
+	{
+		pthread_mutex_unlock(&philo->glob->data_lock);
+		pthread_mutex_unlock(first);
+		pthread_mutex_unlock(second);
+		return ;
+	}
+	printf ("%ld %d has taken a fork\n", \
+		get_time() - philo->glob->start_time, philo->id);
+	pthread_mutex_unlock(&philo->glob->data_lock);
+	eate(philo);
+	pthread_mutex_unlock(first);
+	pthread_mutex_unlock(second);
 }
 
 void	sleap_think(t_philo *philo)
