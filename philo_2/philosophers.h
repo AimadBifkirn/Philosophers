@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:22:22 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/19 13:23:07 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:54:04 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ size_t			ft_strlen(const char *s);
 pthread_mutex_t	*forks_init(int n);
 t_philo			*init_philo(t_infos *info);
 long			get_time(void);
-void			ft_usleep(t_philo *philo);
 void			join_threads(t_philo *philo);
 void			*philo_routine(void *glob);
 void			*gard_routine(void *arg);
