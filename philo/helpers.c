@@ -52,15 +52,14 @@ void	*routine_of_philo(void *philo)
 			pthread_mutex_lock(c_philo->left);
 			if (!c_philo->infos->died)
 			{
-				pthread_mutex_lock(c_philo->left);
+				pthread_mutex_unlock(c_philo->left);
 				return (NULL);
 			}
 			printf ("%ld: Philosopher %d toke a fork\n", get_time() - c_philo->infos->start_time, c_philo->id);
 		}
 		ft_usleep(philo);
-		usleep(1000);
 	}
-	return (philo);
+	return (NULL);
 }
 
 void	*monitore_routine(void *philo)
@@ -72,22 +71,18 @@ void	*monitore_routine(void *philo)
 	while (c_philo->infos->died)
 	{
 		i = 0;
-		while (i < c_philo->infos->n_philos)
+		if (c_philo[i].infos->num_times_eat != -1 && c_philo[i].num_meals == c_philo->infos->num_times_eat)
+			return (NULL);
+		while (i < c_philo->infos->n_philos && (c_philo[i].infos->num_times_eat == -1 || c_philo[i].num_meals < c_philo->infos->num_times_eat))
 		{
-			pthread_mutex_lock(&c_philo[i].infos->data_lock);
-			if (c_philo[i].infos->num_times_eat != -1 && c_philo[i].num_meals == c_philo->infos->num_times_eat)
-			{
-				i++;
-				continue ;
-			}
 			if ((get_time() - c_philo[i].last_meal_time) > c_philo[i].infos->time_to_d)
 			{
 				printf ("%ld: Philosopher %d died\n", get_time() - c_philo[i].infos->start_time, c_philo[i].id);
+				pthread_mutex_lock(&c_philo[i].infos->data_lock);
 				c_philo[i].infos->died = 0;
 				pthread_mutex_unlock(&c_philo[i].infos->data_lock);
 				return (NULL);
 			}
-			pthread_mutex_unlock(&c_philo[i].infos->data_lock);
 			i++;
 		}
 	}
