@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:09:11 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/20 19:56:55 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/22 21:03:31 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	init_glob(t_infos **glob, char **argv)
 	t_infos	*res;
 
 	res = malloc (sizeof(t_infos));
+	if (!res)
+		error_malloc();
 	res->n_philos = ft_atoi(argv[1]);
 	if (res->n_philos == 0 || res->n_philos > 200)
 	{
@@ -53,6 +55,8 @@ void	init_glob(t_infos **glob, char **argv)
 	res->forks = forks_init(res->n_philos);
 	pthread_mutex_init(&(res->data_lock), NULL);
 	res->philos = malloc (sizeof(t_philo) * res->n_philos);
+	if (!res->philos)
+		error_malloc();
 	*glob = res;
 }
 

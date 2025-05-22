@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:23:54 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/20 13:53:59 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/22 21:04:46 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ pthread_mutex_t	*forks_init(int n)
 
 	i = 0;
 	res = malloc(sizeof(pthread_mutex_t) * n);
+	if (!res)
+		error_malloc();
 	while (i < n)
 	{
 		pthread_mutex_init(&res[i], NULL);
@@ -51,4 +53,10 @@ void	free_all(t_infos **glob)
 	free ((*glob)->forks);
 	free (*glob);
 	*glob = NULL;
+}
+
+void	error_malloc()
+{
+	write (2, "malloc failed !\n", 17);
+	exit (1);
 }
