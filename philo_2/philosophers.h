@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:22:22 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/22 21:03:39 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:14:31 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,13 @@ void			check_valid_args(char **args);
 size_t			ft_strlen(const char *s);
 pthread_mutex_t	*forks_init(int n);
 t_philo			*init_philo(t_infos *info);
+void			init_glob(t_infos **glob, char **argv);
 long			get_time(void);
 void			join_threads(t_philo *philo);
 void			*philo_routine(void *glob);
 void			*gard_routine(void *arg);
 void			free_all(t_infos **glob);
 void			error_malloc(void);
+void			mutex_destroy(pthread_mutex_t *res, int count);
 
 #endif

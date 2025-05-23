@@ -6,11 +6,23 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:23:54 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/22 21:04:46 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:20:22 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	mutex_destroy(pthread_mutex_t *res, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		pthread_mutex_destroy(&res[i]);
+		i++;
+	}
+}
 
 pthread_mutex_t	*forks_init(int n)
 {
@@ -20,10 +32,15 @@ pthread_mutex_t	*forks_init(int n)
 	i = 0;
 	res = malloc(sizeof(pthread_mutex_t) * n);
 	if (!res)
-		error_malloc();
+		return (NULL);
 	while (i < n)
 	{
-		pthread_mutex_init(&res[i], NULL);
+		if (pthread_mutex_init(&res[i], NULL))
+		{
+			mutex_destroy(res, i);
+			free (res);
+			return (NULL);
+		}
 		i++;
 	}
 	return (res);
@@ -55,7 +72,7 @@ void	free_all(t_infos **glob)
 	*glob = NULL;
 }
 
-void	error_malloc()
+void	error_malloc(void)
 {
 	write (2, "malloc failed !\n", 17);
 	exit (1);

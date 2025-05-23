@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:09:11 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/22 21:03:31 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:50:28 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,35 +29,6 @@ void	init_philos(t_philo **philo, t_infos *glob)
 			(*philo)[i].right = &glob->forks[i + 1];
 		i++;
 	}
-}
-
-void	init_glob(t_infos **glob, char **argv)
-{
-	t_infos	*res;
-
-	res = malloc (sizeof(t_infos));
-	if (!res)
-		error_malloc();
-	res->n_philos = ft_atoi(argv[1]);
-	if (res->n_philos == 0 || res->n_philos > 200)
-	{
-		write (2, "invalid philos number !\n", 25);
-		exit (1);
-	}
-	res->time_to_d = ft_atoi(argv[2]);
-	res->time_to_e = ft_atoi(argv[3]);
-	res->time_to_s = ft_atoi(argv[4]);
-	if (argv[5])
-		res->num_times_eat = ft_atoi(argv[5]);
-	else
-		res->num_times_eat = -1;
-	res->died = 0;
-	res->forks = forks_init(res->n_philos);
-	pthread_mutex_init(&(res->data_lock), NULL);
-	res->philos = malloc (sizeof(t_philo) * res->n_philos);
-	if (!res->philos)
-		error_malloc();
-	*glob = res;
 }
 
 void	create_threads(t_infos **glob)
@@ -105,6 +76,13 @@ int	main(int argc, char **argv)
 	check_valid_args(argv + 1);
 	init_glob(&glob, argv);
 	init_philos(&glob->philos, glob);
+	if (glob->n_philos == 1)
+	{
+		printf ("%d %d has taken a fork\n", 0, 1);
+		printf ("%d %d died\n", 0, 1);
+		free_all(&glob);
+		return (0);
+	}
 	create_threads(&glob);
 	pthread_create(&gard, NULL, gard_routine, glob);
 	join_threads(glob->philos);

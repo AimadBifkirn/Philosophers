@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:16:50 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/21 19:38:05 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/23 11:20:09 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,6 @@ void	take_fork_and_eate(t_philo *philo, \
 {
 	if (take_first(philo, first))
 		return ;
-	if (philo->glob->n_philos == 1)
-	{
-		pthread_mutex_unlock(first);
-		pthread_mutex_lock(&philo->glob->data_lock);
-		philo->glob->died = 1;
-		pthread_mutex_unlock(&philo->glob->data_lock);
-		return ;
-	}
 	pthread_mutex_lock(second);
 	pthread_mutex_lock(&philo->glob->data_lock);
 	if (philo->glob->died)
@@ -92,6 +84,7 @@ void	sleap_think(t_philo *philo)
 		printf ("%ld %d is thinking\n", \
 		get_time() - philo->glob->start_time, philo->id);
 	pthread_mutex_unlock(&philo->glob->data_lock);
+	usleep (1000);
 }
 
 void	*philo_routine(void *glob)
@@ -109,13 +102,16 @@ void	*philo_routine(void *glob)
 		first = philo->left;
 		second = philo->right;
 	}
+	pthread_mutex_lock(&philo->glob->data_lock);
 	while (!philo->glob->died \
 	&& (philo->glob->num_times_eat == -1 \
 	|| philo->num_meals < philo->glob->num_times_eat))
 	{
+		pthread_mutex_unlock(&philo->glob->data_lock);
 		take_fork_and_eate(philo, first, second);
 		sleap_think(philo);
-		usleep (1000);
+		pthread_mutex_lock(&philo->glob->data_lock);
 	}
+	pthread_mutex_unlock(&philo->glob->data_lock);
 	return (NULL);
 }
