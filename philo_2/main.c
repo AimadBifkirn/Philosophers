@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:09:11 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/23 10:50:28 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/25 09:17:58 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main(int argc, char **argv)
 	if (glob->n_philos == 1)
 	{
 		printf ("%d %d has taken a fork\n", 0, 1);
-		printf ("%d %d died\n", 0, 1);
+		printf ("%d %d died\n", glob->time_to_d, 1);
 		free_all(&glob);
 		return (0);
 	}
