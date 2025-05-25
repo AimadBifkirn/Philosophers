@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_glob.c                                        :+:      :+:    :+:   */
+/*   init_glob_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:14:34 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/24 10:36:06 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/25 09:14:38 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	cleanup_and_exit(t_infos *res, const char *msg)
 	}
 	free(res);
 	write(2, msg, ft_strlen(msg));
-	exit(1);
+	exit(0);
 }
 
 void	null_initial(t_infos **res)
