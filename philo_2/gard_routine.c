@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:12:45 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/23 11:07:51 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/25 10:45:08 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_num_meals(t_infos *g)
 {
 	pthread_mutex_lock(&g->data_lock);
-	if (g->philos[0].num_meals != 1 \
+	if (g->philos[0].num_meals != -1 \
 	&& g->philos[0].num_meals == g->num_times_eat)
 	{
 		pthread_mutex_unlock(&g->data_lock);
