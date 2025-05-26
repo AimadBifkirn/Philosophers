@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:14:34 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/26 16:20:18 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/27 00:32:56 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	init_glob(t_infos **glob, char **argv)
 		error_malloc();
 	null_initial(&res);
 	res->n_philos = ft_atoi(argv[1]);
-	if (res->n_philos == 0 || res->n_philos > 200)
+	if (res->n_philos == 0)
 		cleanup_and_exit(res, "invalid philos number !\n");
 	init_helper(&res, argv);
 	res->pids = malloc(sizeof(pid_t) * res->n_philos);
