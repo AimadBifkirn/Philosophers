@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 21:58:28 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/26 09:44:49 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:25:08 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,23 @@ void	*gard_routine(void	*arg)
 			- philo->glob->start_time, philo->id);
 			exit(1);
 		}
-		if (philo->glob->num_times_eat != -1 \
-			&& philo->num_meals >= philo->glob->num_times_eat)
-		{
-			sem_post(philo->glob->data_lock);
-			exit(0);
-		}
 		sem_post(philo->glob->data_lock);
 		usleep(1000);
 	}
+	return (NULL);
 }
 
 void	take_fork_and_eate(t_philo *philo)
 {
+	sem_wait(philo->glob->take);
 	sem_wait(philo->glob->forks);
-	sem_wait(philo->glob->data_lock);
+	printf ("%ld %d has taken a fork\n", \
+	get_time() - philo->glob->start_time, philo->id);
+	sem_wait(philo->glob->forks);
 	printf ("%ld %d has taken a fork\n", \
 		get_time() - philo->glob->start_time, philo->id);
-	sem_post(philo->glob->data_lock);
-	sem_wait(philo->glob->forks);
+	sem_post(philo->glob->take);
 	sem_wait(philo->glob->data_lock);
-	printf ("%ld %d has taken a fork\n", \
-		get_time() - philo->glob->start_time, philo->id);
 	philo->num_meals++;
 	philo->last_meal_time = get_time();
 	printf ("%ld %d is eating\n", \

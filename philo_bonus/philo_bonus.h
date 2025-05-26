@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:03:59 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/24 22:04:12 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:13:02 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_infos
 	int				died;
 	sem_t			*forks;
 	sem_t			*data_lock;
+	sem_t			*take;
 	pid_t			*pids;
 }	t_infos;
 

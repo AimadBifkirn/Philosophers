@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:14:34 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/25 18:37:54 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:20:18 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ void	cleanup_and_exit(t_infos *res, const char *msg)
 		sem_close(res->data_lock);
 		sem_unlink("/sem_data");
 	}
+	if (res->take != SEM_FAILED)
+	{
+		sem_close(res->take);
+		sem_unlink("/sem_take");
+	}
 	free(res);
 	write(2, msg, ft_strlen(msg));
 	exit(0);
@@ -33,9 +38,13 @@ void	cleanup_and_exit(t_infos *res, const char *msg)
 
 void	null_initial(t_infos **res)
 {
+	sem_unlink("/sem_forks");
+	sem_unlink("/sem_data");
+	sem_unlink("/sem_take");
 	(*res)->data_lock = NULL;
 	(*res)->forks = NULL;
 	(*res)->pids = NULL;
+	(*res)->take = NULL;
 }
 
 void	init_helper(t_infos **res, char **argv)
@@ -53,8 +62,6 @@ void	init_glob(t_infos **glob, char **argv)
 {
 	t_infos	*res;
 
-	sem_unlink("/sem_forks");
-	sem_unlink("/sem_data");
 	res = malloc (sizeof(t_infos));
 	if (!res)
 		error_malloc();
@@ -72,5 +79,8 @@ void	init_glob(t_infos **glob, char **argv)
 	res->data_lock = sem_open("/sem_data", O_CREAT, 0644, 1);
 	if (res->data_lock == SEM_FAILED)
 		cleanup_and_exit(res, "sem_open(data_lock) failed !!\n");
+	res->take = sem_open("/sem_take", O_CREAT, 0644, 1);
+	if (res->take == SEM_FAILED)
+		cleanup_and_exit(res, "sem_open(take) failed !!\n");
 	*glob = res;
 }
