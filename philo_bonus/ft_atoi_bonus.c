@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:24:34 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/26 21:09:22 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/27 00:44:59 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	check_lenght(char *str)
 			;
 		else
 		{
-			c = 1;		
+			c = 1;
 			len++;
 		}
 		if (str[i])
