@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:24:34 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/19 13:24:35 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/26 21:04:28 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,24 @@ void	check_lenght(char *str)
 {
 	int	i;
 	int	len;
+	int	c;
 
 	i = 0;
 	len = 0;
+	c = 0;
 	while (str[i])
 	{
+		while (c == 0 && str[i] == '0')
+			i++;
 		if (str[i] == '+' || str[i] == '-')
 			;
 		else
+		{
+			c = 1;		
 			len++;
-		i++;
+		}
+		if (str[i])
+			i++;
 	}
 	if (len > 10)
 		print_error(str);
