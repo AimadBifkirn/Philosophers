@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:24:34 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/27 00:44:49 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/27 03:49:35 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,16 @@ static int	sign(char *str)
 	return (i * j);
 }
 
-void	print_error(char *str)
+void	print_error(char *str, t_infos **res)
 {
 	write (2, "this value is begger then int max :", 36);
 	write (2, str, ft_strlen(str));
 	write (2, "\n", 1);
+	free(*res);
 	exit (1);
 }
 
-void	check_lenght(char *str)
+void	check_lenght(char *str, t_infos **res)
 {
 	int	i;
 	int	len;
@@ -71,16 +72,16 @@ void	check_lenght(char *str)
 			i++;
 	}
 	if (len > 10)
-		print_error(str);
+		print_error(str, res);
 }
 
-int	ft_atoi(char *str)
+int	ft_atoi(char *str, t_infos **res)
 {
 	int		i;
 	int		s;
 	long	result;
 
-	check_lenght(str);
+	check_lenght(str, res);
 	s = 1;
 	i = sign((char *)str);
 	if (i < 0)
@@ -98,6 +99,6 @@ int	ft_atoi(char *str)
 		i++;
 	}
 	if (result > INT_MAX)
-		print_error(str);
+		print_error(str, res);
 	return (result * s);
 }

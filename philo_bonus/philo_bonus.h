@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:03:59 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/27 00:33:31 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/27 03:52:58 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	init_glob(t_infos **glob, char **argv);
 void	error_malloc(void);
 long	get_time(void);
 void	cleanup_and_exit(t_infos *res, const char *msg);
-int		ft_atoi(char *str);
+int		ft_atoi(char *str, t_infos **res);
 size_t	ft_strlen(const char *s);
 void	kill_proc_exit(t_infos **glob, int count);
 void	wait_for_cheldrin(t_infos *glob);

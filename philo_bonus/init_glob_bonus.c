@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:14:34 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/27 00:32:56 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/27 03:55:02 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	null_initial(t_infos **res)
 
 void	init_helper(t_infos **res, char **argv)
 {
-	(*res)->time_to_d = ft_atoi(argv[2]);
-	(*res)->time_to_e = ft_atoi(argv[3]);
-	(*res)->time_to_s = ft_atoi(argv[4]);
+	(*res)->time_to_d = ft_atoi(argv[2], res);
+	(*res)->time_to_e = ft_atoi(argv[3], res);
+	(*res)->time_to_s = ft_atoi(argv[4], res);
 	if (argv[5])
-		(*res)->num_times_eat = ft_atoi(argv[5]);
+		(*res)->num_times_eat = ft_atoi(argv[5], res);
 	else
 		(*res)->num_times_eat = -1;
 }
@@ -66,7 +66,7 @@ void	init_glob(t_infos **glob, char **argv)
 	if (!res)
 		error_malloc();
 	null_initial(&res);
-	res->n_philos = ft_atoi(argv[1]);
+	res->n_philos = ft_atoi(argv[1], &res);
 	if (res->n_philos == 0)
 		cleanup_and_exit(res, "invalid philos number !\n");
 	init_helper(&res, argv);
