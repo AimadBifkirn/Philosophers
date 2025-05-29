@@ -6,11 +6,22 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:14:34 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/29 10:30:10 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:13:51 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+void	handel_one_philo(t_philo *philo)
+{
+	if (philo->glob->n_philos == 1)
+	{
+		usleep ((philo->glob->time_to_d + 2) * 1000);
+		sem_post(philo->glob->forks);
+		sem_post(philo->glob->take);
+		return ;
+	}
+}
 
 void	cleanup_and_exit(t_infos *res, const char *msg)
 {

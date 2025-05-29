@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:02:32 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/29 12:14:19 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 13:51:30 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ void	wait_proc_exit(t_infos **glob, int count)
 	int	i;
 
 	i = 0;
+	sem_wait((*glob)->data_lock);
 	(*glob)->dide->__align = 0;
+	sem_post((*glob)->data_lock);
 	while (i < count)
 	{
 		waitpid(-1, NULL, 0);

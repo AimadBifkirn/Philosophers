@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 21:58:28 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/29 12:14:11 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:14:10 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ void	*gard_routine(void	*arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (1)
+	while (philo->glob->num_times_eat == -1 \
+		|| philo->num_meals < philo->glob->num_times_eat)
 	{
 		sem_wait(philo->glob->data_lock);
-		if (get_time() - philo->last_meal_time > philo->glob->time_to_d)
+		if (get_time() - philo->last_meal_time > philo->glob->time_to_d \
+		|| philo->glob->dide->__align == 0)
 		{
 			if (philo->glob->dide->__align == 1)
 			{
@@ -46,6 +48,7 @@ void	take_fork_and_eate(t_philo *philo)
 	if (!check_died(philo->glob))
 		printf ("%ld %d has taken a fork\n", \
 		get_time() - philo->glob->start_time, philo->id);
+	handel_one_philo(philo);
 	sem_wait(philo->glob->forks);
 	if (!check_died(philo->glob))
 		printf ("%ld %d has taken a fork\n", \
@@ -70,9 +73,9 @@ void	start_philo(t_philo *philo)
 	pthread_t	gard;
 
 	pthread_create (&gard, NULL, gard_routine, philo);
-	while (philo->glob->num_times_eat == -1 \
-		|| philo->num_meals < philo->glob->num_times_eat \
-		|| check_died(philo->glob))
+	while ((philo->glob->num_times_eat == -1 \
+		|| philo->num_meals < philo->glob->num_times_eat) \
+		&& !check_died(philo->glob))
 	{
 		take_fork_and_eate(philo);
 		sem_wait(philo->glob->data_lock);

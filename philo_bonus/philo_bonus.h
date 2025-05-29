@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:03:59 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/29 12:14:31 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:12:39 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ size_t	ft_strlen(const char *s);
 void	wait_proc_exit(t_infos **glob, int count);
 void	wait_for_cheldrin(t_infos *glob);
 int		check_died(t_infos *glob);
+void	handel_one_philo(t_philo *philo);
 
 #endif
