@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 21:58:28 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/29 14:14:10 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:06:47 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ void	start_philo(t_philo *philo)
 			printf ("%ld %d is sleeping\n", \
 			get_time() - philo->glob->start_time, philo->id);
 		sem_post(philo->glob->data_lock);
-		if (check_died(philo->glob))
-			break ;
 		usleep (philo->glob->time_to_s * 1000);
 		sem_wait(philo->glob->data_lock);
 		if (!check_died(philo->glob))
