@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:22:22 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/27 03:52:37 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/23 10:14:31 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ typedef struct s_philo
 	t_infos			*glob;
 }	t_philo;
 
-int				ft_atoi(char *str, t_infos **res);
+int				ft_atoi(char *str);
 void			check_valid_args(char **args);
 size_t			ft_strlen(const char *s);
 pthread_mutex_t	*forks_init(int n);
+t_philo			*init_philo(t_infos *info);
 void			init_glob(t_infos **glob, char **argv);
 long			get_time(void);
 void			join_threads(t_philo *philo);

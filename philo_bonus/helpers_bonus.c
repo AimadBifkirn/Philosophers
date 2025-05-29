@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:02:32 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/26 23:34:56 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/28 18:54:52 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	kill_proc_exit(t_infos **glob, int count)
 	i = 0;
 	while (i < count)
 	{
-		kill ((*glob)->pids[i], SIGTERM);
+		kill ((*glob)->pids[i], SIGKILL);
 		i++;
 	}
 	cleanup_and_exit(*glob, "fork failed !!\n");

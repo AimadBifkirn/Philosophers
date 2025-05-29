@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:16:50 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/23 11:20:09 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 08:39:48 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ void	take_fork_and_eate(t_philo *philo, \
 {
 	if (take_first(philo, first))
 		return ;
+	if (philo->glob->n_philos == 1)
+	{
+		pthread_mutex_unlock(first);
+		usleep((philo->glob->time_to_d + 1) * 1000);
+		return ;
+	}
 	pthread_mutex_lock(second);
 	pthread_mutex_lock(&philo->glob->data_lock);
 	if (philo->glob->died)

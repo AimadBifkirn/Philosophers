@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:09:11 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/25 15:06:15 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 08:46:58 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,6 @@ int	main(int argc, char **argv)
 	check_valid_args(argv + 1);
 	init_glob(&glob, argv);
 	init_philos(&glob->philos, glob);
-	if (glob->n_philos == 1)
-	{
-		printf ("%d %d has taken a fork\n", 0, 1);
-		printf ("%d %d died\n", glob->time_to_d, 1);
-		free_all(&glob);
-		return (0);
-	}
 	create_threads(&glob);
 	pthread_create(&gard, NULL, gard_routine, glob);
 	join_threads(glob->philos);
