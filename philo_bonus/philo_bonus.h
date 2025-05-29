@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:03:59 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/27 00:33:31 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 12:14:31 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ typedef struct s_infos
 	int				time_to_e;
 	int				num_times_eat;
 	long			start_time;
-	int				died;
 	sem_t			*forks;
 	sem_t			*data_lock;
 	sem_t			*take;
+	sem_t			*dide;
 	pid_t			*pids;
 }	t_infos;
 
@@ -55,9 +55,10 @@ void	init_glob(t_infos **glob, char **argv);
 void	error_malloc(void);
 long	get_time(void);
 void	cleanup_and_exit(t_infos *res, const char *msg);
-int		ft_atoi(char *str);
+int		ft_atoi(char *str, t_infos	**res);
 size_t	ft_strlen(const char *s);
-void	kill_proc_exit(t_infos **glob, int count);
+void	wait_proc_exit(t_infos **glob, int count);
 void	wait_for_cheldrin(t_infos *glob);
+int		check_died(t_infos *glob);
 
 #endif

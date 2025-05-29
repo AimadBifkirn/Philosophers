@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:14:34 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/29 08:27:52 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 10:30:10 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void	cleanup_and_exit(t_infos *res, const char *msg)
 		sem_close(res->take);
 		sem_unlink("/sem_take");
 	}
+	if (res->dide != SEM_FAILED)
+	{
+		sem_close(res->dide);
+		sem_unlink("/sem_died");
+	}
 	free(res);
 	write(2, msg, ft_strlen(msg));
 	exit(0);
@@ -41,19 +46,24 @@ void	null_initial(t_infos **res)
 	sem_unlink("/sem_forks");
 	sem_unlink("/sem_data");
 	sem_unlink("/sem_take");
+	sem_unlink("/sem_died");
 	(*res)->data_lock = NULL;
 	(*res)->forks = NULL;
 	(*res)->pids = NULL;
 	(*res)->take = NULL;
+	(*res)->dide = NULL;
+	(*res)->dide = sem_open("/sem_died", O_CREAT, 0644, 1);
+	if ((*res)->dide == SEM_FAILED)
+		cleanup_and_exit(*res, "sem_open(sem_died) failed !!\n");
 }
 
 void	init_helper(t_infos **res, char **argv)
 {
-	(*res)->time_to_d = ft_atoi(argv[2]);
-	(*res)->time_to_e = ft_atoi(argv[3]);
-	(*res)->time_to_s = ft_atoi(argv[4]);
+	(*res)->time_to_d = ft_atoi(argv[2], res);
+	(*res)->time_to_e = ft_atoi(argv[3], res);
+	(*res)->time_to_s = ft_atoi(argv[4], res);
 	if (argv[5])
-		(*res)->num_times_eat = ft_atoi(argv[5]);
+		(*res)->num_times_eat = ft_atoi(argv[5], res);
 	else
 		(*res)->num_times_eat = -1;
 }
@@ -66,7 +76,7 @@ void	init_glob(t_infos **glob, char **argv)
 	if (!res)
 		error_malloc();
 	null_initial(&res);
-	res->n_philos = ft_atoi(argv[1]);
+	res->n_philos = ft_atoi(argv[1], &res);
 	if (res->n_philos == 0 || res->n_philos > 200)
 		cleanup_and_exit(res, "invalid philos number !\n");
 	init_helper(&res, argv);
