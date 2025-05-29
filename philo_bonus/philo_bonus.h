@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:03:59 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/29 14:12:39 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:34:26 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	check_valid_args(char **args);
 void	init_glob(t_infos **glob, char **argv);
 void	error_malloc(void);
 long	get_time(void);
-void	cleanup_and_exit(t_infos *res, const char *msg);
+void	cleanup_and_exit(t_infos *res, const char *msg, int ex);
 int		ft_atoi(char *str, t_infos	**res);
 size_t	ft_strlen(const char *s);
 void	wait_proc_exit(t_infos **glob, int count);

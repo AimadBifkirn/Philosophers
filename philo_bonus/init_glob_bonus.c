@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:14:34 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/29 14:13:51 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:35:30 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handel_one_philo(t_philo *philo)
 	}
 }
 
-void	cleanup_and_exit(t_infos *res, const char *msg)
+void	cleanup_and_exit(t_infos *res, const char *msg, int ex)
 {
 	if (res->pids)
 		free(res->pids);
@@ -49,7 +49,7 @@ void	cleanup_and_exit(t_infos *res, const char *msg)
 	}
 	free(res);
 	write(2, msg, ft_strlen(msg));
-	exit(0);
+	exit(ex);
 }
 
 void	null_initial(t_infos **res)
@@ -65,7 +65,7 @@ void	null_initial(t_infos **res)
 	(*res)->dide = NULL;
 	(*res)->dide = sem_open("/sem_died", O_CREAT, 0644, 1);
 	if ((*res)->dide == SEM_FAILED)
-		cleanup_and_exit(*res, "sem_open(sem_died) failed !!\n");
+		cleanup_and_exit(*res, "sem_open(sem_died) failed !!\n", 1);
 }
 
 void	init_helper(t_infos **res, char **argv)
@@ -89,19 +89,19 @@ void	init_glob(t_infos **glob, char **argv)
 	null_initial(&res);
 	res->n_philos = ft_atoi(argv[1], &res);
 	if (res->n_philos == 0 || res->n_philos > 200)
-		cleanup_and_exit(res, "invalid philos number !\n");
+		cleanup_and_exit(res, "invalid philos number !\n", 1);
 	init_helper(&res, argv);
 	res->pids = malloc(sizeof(pid_t) * res->n_philos);
 	if (!res->pids)
-		cleanup_and_exit(res, "failed to allocate pids !!\n");
+		cleanup_and_exit(res, "failed to allocate pids !!\n", 1);
 	res->forks = sem_open("/sem_forks", O_CREAT, 0644, res->n_philos);
 	if (res->forks == SEM_FAILED)
-		cleanup_and_exit(res, "sem_open(forks) failed !!\n");
+		cleanup_and_exit(res, "sem_open(forks) failed !!\n", 1);
 	res->data_lock = sem_open("/sem_data", O_CREAT, 0644, 1);
 	if (res->data_lock == SEM_FAILED)
-		cleanup_and_exit(res, "sem_open(data_lock) failed !!\n");
+		cleanup_and_exit(res, "sem_open(data_lock) failed !!\n", 1);
 	res->take = sem_open("/sem_take", O_CREAT, 0644, 1);
 	if (res->take == SEM_FAILED)
-		cleanup_and_exit(res, "sem_open(take) failed !!\n");
+		cleanup_and_exit(res, "sem_open(take) failed !!\n", 1);
 	*glob = res;
 }

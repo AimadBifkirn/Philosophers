@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 21:58:28 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/29 15:06:47 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:36:09 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	start_philo(t_philo *philo)
 		usleep (1000);
 	}
 	pthread_join(gard, NULL);
-	cleanup_and_exit(philo->glob, "");
+	cleanup_and_exit(philo->glob, "", 0);
 }
 
 void	start_proc(t_infos **glob)
@@ -137,6 +137,6 @@ int	main(int argc, char **argv)
 	check_valid_args(argv + 1);
 	init_glob(&glob, argv);
 	start_proc(&glob);
-	cleanup_and_exit(glob, "");
+	cleanup_and_exit(glob, "", 0);
 	return (0);
 }

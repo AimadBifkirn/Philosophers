@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 22:02:32 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/29 13:51:30 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:37:56 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	wait_proc_exit(t_infos **glob, int count)
 		waitpid(-1, NULL, 0);
 		i++;
 	}
-	cleanup_and_exit(*glob, "fork failed !!\n");
-	exit (1);
+	cleanup_and_exit(*glob, "fork failed !!\n", 1);
 }
 
 void	wait_for_cheldrin(t_infos *glob)

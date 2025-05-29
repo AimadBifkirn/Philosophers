@@ -6,7 +6,7 @@
 /*   By: abifkirn <abifkirn@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:24:34 by abifkirn          #+#    #+#             */
-/*   Updated: 2025/05/29 09:40:02 by abifkirn         ###   ########.fr       */
+/*   Updated: 2025/05/29 15:35:38 by abifkirn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ void	print_error(char *str, t_infos	**res)
 	write (2, "this value is begger then int max :", 36);
 	write (2, str, ft_strlen(str));
 	write (2, "\n", 1);
-	free (*res);
-	exit (1);
+	cleanup_and_exit(*res, "", 1);
 }
 
 void	check_lenght(char *str, t_infos	**res)
